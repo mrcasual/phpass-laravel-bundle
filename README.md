@@ -7,7 +7,6 @@ It uses the OpenBSD-style Blowfish-based bcrypt (*CRYPT_BLOWFISH*). Fallback inc
 MD5-based salted and variable iteration count password hashes implemented in phpass itself.
 
 -----
-
 ## Installation
 
 Use Artisan to install *phpass*:
@@ -24,36 +23,38 @@ return array(
 )
 ```
 
+You can also create an alias in `application.php`:
+
+```php
+'phpass' => Hash\phpass('auto' => true),
+)
+```
+
 ## Usage
 
-Initiate the phpass class:
+The syntax is consistent with Laravel's built-in **Hash** class (i.e., *make* and *check*). If you did not create an alias, use `Hash\phpass::` instead of `phpass::`.
+
+### Create hash
 
 ```php
 /**
  *
+ * @param   string		your password :)
  * @param   int			base-2 logarithm of the iteration count used for password stretching (default is 8);
  * @param	boolean		use portable hashes (default is FALSE);
  *
- * Omitting parameters assumes default values, which should be fine in most cases.
- *
  */
 
-$do = new phpass;
-```
-
-Hash password:
-
-```php
 $password = 'your extremely secure password';
-$hashedPassword = $do->HashPassword($password);
+$hashedPassword = phpass::make($password);
 ```
 
-Check password against the hash:
+### Check hash
 
 ```php
 $hashedPassword = '$2a$08$aZtg0P47YOrdAh/fPARzDuBaAJMhu4ueeri8Hxh6OOAjI80HXVwHu';
 $password = 'your extremely weak password';
-echo ($do->CheckPassword($password, $hashedPassword)) ? 'Correct!' : 'Wrong!'; 
+echo (phpass::check($password, $hashedPassword)) ? 'Correct!' : 'Wrong!'; 
 ```
 
 ## Miscellaneous
