@@ -179,7 +179,8 @@ class phpass {
 		# chances and we also do not want to waste an additional byte
 		# of entropy.
 		$itoa64 = './ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
+		
+		//this php version is > 5.3.7 $2y$ this < 5.3.7 $2a$ (PHPVERSION >= 5.3.7)? $2y$ : $2a$
 		$output = '$2a$';
 		$output .= chr(ord('0') + static::$iteration_count_log2 / 10);
 		$output .= chr(ord('0') + static::$iteration_count_log2 % 10);
